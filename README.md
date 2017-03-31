@@ -1,4 +1,4 @@
-# Angular2 with Angular 2 core 2.4.10
+# Angular2 with Angular core 2.4.10
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 Sample projects 
