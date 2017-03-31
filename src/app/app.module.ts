@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {CustomHttpService} from "./rest.service";
 
 @NgModule({
   declarations: [
@@ -12,9 +14,10 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    NgxDatatableModule
   ],
-  providers: [],
+  providers: [CustomHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
