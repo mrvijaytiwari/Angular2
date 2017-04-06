@@ -5,6 +5,7 @@
 import 'rxjs/add/operator/map';
 import {Injectable} from '@angular/core';
 import {Http} from "@angular/http";
+import {Observable} from "rxjs";
 
 
 @Injectable()
@@ -16,8 +17,13 @@ export class CustomHttpService {
           return this._http.get('http://services.groupkt.com/state/get/ind/all')
               .map(res => {
                 let allJson = res.json();
-                return allJson.RestResponse.result;
-              } );
+                if (res.status === 201) {
+                  return { status: res.status, jsonData: allJson}
+                } else
+                if (res.status === 200) {
+                  return { status: res.status, jsonData: allJson.RestResponse.result };
+                }
+              });
     }
 
   /*postJSON() {

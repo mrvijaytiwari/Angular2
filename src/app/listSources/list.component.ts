@@ -7,7 +7,7 @@ import {Component} from "@angular/core";
 @Component({
   selector: 'list-root',
   template: `
-    <h4>......................</h4>
+    <h4>-----------------------------------------</h4>
     <h4>{{listTitle}}</h4>
     <section class="main">
       <input  [(ngModel)]="tempItemToAdd" />
@@ -15,7 +15,7 @@ import {Component} from "@angular/core";
       <p>
       <div style="width: 300px">
         <ul class="list-group list-inline">
-          <li class="list-group-item" *ngFor="let item of items">
+          <li class="list-group-item" id="{{item.id}}" *ngFor="let item of items">
             <div class="view">
               <span style="display: none">{{item.id}}</span>
               <span class="list-group-item-text">{{item.txt}} </span>
@@ -29,12 +29,10 @@ import {Component} from "@angular/core";
 
 })
 export class ListComponent {
-  listTitle = 'My List';
+  listTitle = 'My Cool List';
   tempItemToAdd:string;
   idGenerator:number = 1;
-  items: TodoItem[] = [
-    new TodoItem(this.idGenerator+1,  "Raajdoot")
-    ];
+  items: TodoItem[] = [ new TodoItem(100, "DEF")];
 
   addItem() {
      var tempTodo = new TodoItem(this.idGenerator+1,  this.tempItemToAdd) ;

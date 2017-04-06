@@ -7,22 +7,28 @@ import {Component} from "@angular/core";
   selector: 'input-root',
   template: `
                 <div style="padding:50px">
-                  <h4>{{listTitle}}..</h4>
+                  <h4>{{listTitle}}</h4>
                   <!--Example of two way binding, either input or variable changes,
                         It will work both ways-->
-                  <input [(ngModel)]="name" >
-                  <p>Value: {{ name }}</p>
-                  <button (click)="setValue()">Set value 'Alpha'</button>
+                  <input [(ngModel)]="liveInput" >
+                  <p>Live changing value From Input:      <b> {{ liveInput }} </b>
+                  <p>
+
+                  OnChange trigger: <input [(ngModel)]="valueSet" (change)="setValue()" >                  
+                    <p><label class="badge-success"> {{onChangeVar}}</label>
                   <p><p>
                   <list-root>List component</list-root>
                 </div>  
               `
-
 })
 export class InputComponent {
   listTitle = 'Input Component';
-  name: string = '';
-  setValue() { this.name = 'Alpha'; }
+  liveInput: string = '';
+  valueSet: string = '';
+  onChangeVar: string = '';
+  setValue() {
+    this.onChangeVar =  this.valueSet ;
+  }
 
 }
 

@@ -6,10 +6,16 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {CustomHttpService} from "./rest.service";
+import {InputComponent} from "./listSources/input.component";
+import {ListComponent} from "./listSources/list.component";
+import {LoadingComponent} from "./loading.component";
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoadingComponent
+    /*ListComponent,InputComponent*/
   ],
   imports: [
     BrowserModule,
@@ -18,6 +24,6 @@ import {CustomHttpService} from "./rest.service";
     NgxDatatableModule
   ],
   providers: [CustomHttpService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent /*InputComponent*/]
 })
 export class AppModule { }
