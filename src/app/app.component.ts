@@ -4,42 +4,31 @@ import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-table',
-  template: `
-                <H2 style="text-align: center">India State list from RESTful</H2>
-                <div class="forLoading">
-                  <loading-http [loadingStatus] = "loadingStatusThis">http load... </loading-http>
-                </div>
-                <div>
-                  <ngx-datatable  class="material"  
-                    [rows]="stateData"
-                    [columns]="columns"
-                    [columnMode]="'force'"
-                    [headerHeight]="50"
-                    [footerHeight]="50"
-                    [rowHeight]="'auto'"
-                    [limit]="5">
-                  </ngx-datatable>
-                </div>
-              `
+  templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit{
 
   stateData:any;
   constructor(private _httpService: CustomHttpService) {}
   loadingStatusThis:number;
+  loadingIndicator: boolean = true;
 
   ngOnInit(){
     //called after the constructor and called  after the first ngOnChanges()
+    this.getStateList();
+  }
+ getStateList(){
     this._httpService.getStateList()
       .subscribe(
         data => {
           this.stateData = data.jsonData;
           this.loadingStatusThis = data.status;
           console.log(this.loadingStatusThis )
+          this.loadingIndicator=false;
         },
         error => {
           console.log(error);
-          this.loadingStatusThis = 100;
+          this.loadingStatusThis = 100;  
         },
          () => {
               console.log("Finished")
@@ -47,13 +36,29 @@ export class AppComponent implements OnInit{
               console.log(this.loadingStatusThis )
 
          }
-      );
-
-  }
-
+      ); 
+    }
   columns = [
     { prop: 'name', name: 'State Name' },
     { prop: 'abbr', name: 'Short name' },
     { prop: 'capital', name: 'Capital City' }
   ];
+
+  LIMITS = [
+    { key: '5', value: 5 },
+    { key: '10', value: 10 },
+    { key: '20', value: 20 }
+  ];
+
+  limit: number = this.LIMITS[0].value;
+  rowLimits: Array<any> = this.LIMITS;
+
+  changeRowLimits(value) {
+    this.limit = value;
+    this.loadingIndicator=true;
+    this.stateData=[];
+    this.getStateList();
+    console.log("limit is",this.limit,"data size",this.stateData)
+  }
+
 }
