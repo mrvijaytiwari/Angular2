@@ -6,9 +6,12 @@
             <option *ngFor="let limit of rowLimits" [value]="limit.value">{{limit.key}} row per page</option>
 </select>
 </div>
+ <h4><small>({{selected?.length}})</small> Item selected</h4>
 <div>
-  <ngx-datatable class="material" [rows]="stateData" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
-    [rowHeight]="'auto'" [loadingIndicator] ="loadingIndicator" [limit]='limit'>
+  <ngx-datatable class="material bordered" [rows]="stateData" [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+     [rowHeight]="50" [loadingIndicator] ="loadingIndicator" [limit]='limit' 
+     (activate)="onActivate($event)"  [selectionType]="'checkbox'"
+      (select)='onSelect($event)'>
   </ngx-datatable>
 </div>
 
