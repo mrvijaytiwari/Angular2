@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CustomHttpService} from "./rest.service";
 import {Observable} from "rxjs";
+
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +10,9 @@ import {Observable} from "rxjs";
 })
 export class AppComponent implements OnInit{
 
+@ViewChild(DatatableComponent) table: DatatableComponent;
   stateData:any;
+  temp = [];
   constructor(private _httpService: CustomHttpService) {}
   loadingStatusThis:number;
   loadingIndicator: boolean = true;
@@ -33,6 +37,7 @@ export class AppComponent implements OnInit{
       .subscribe(
         data => {
           this.stateData = data.jsonData;
+          this.temp = [...this.stateData];
           this.loadingStatusThis = data.status;
           console.log(this.loadingStatusThis )
           this.loadingIndicator=false;
@@ -74,5 +79,20 @@ onSelect({ selected }) {
 
   onActivate(event) {
     console.log('Activate Event', event);
+}
+updateFilter(event) {
+    const val = event.target.value;
+    console.log("==="+val);
+     this.stateData=[];
+    // filter our data
+    const temp = this.temp.filter(function(d) {
+      console.log("d.name"+d.name);
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.stateData = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
 }
 }
